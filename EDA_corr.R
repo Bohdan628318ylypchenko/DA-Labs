@@ -18,7 +18,7 @@ dev.off()
 
 # Scatter Point plot: hemoglobin | weight
 sp_hemoglobin_weight <- ggplot(data, aes(x = weight, y = hemoglobin)) +
-  geom_point() +
+  geom_point(alpha = 0.2) +
   labs(x = "weight", y = "hemoglobin", title = "Scatter weight | hemoglobin") + 
   theme(axis.text = element_text(size = 8),
         axis.title = element_text(size = 8),
@@ -26,27 +26,27 @@ sp_hemoglobin_weight <- ggplot(data, aes(x = weight, y = hemoglobin)) +
 ggsave("./output/Lab1_EDA/corr/sp_hemoglobin_weight.png", plot = sp_hemoglobin_weight)
 
 # Scatter Point plot: HDL_chole | weight
-sp_hdl_chole_weight <- ggplot(data, aes(x = HDL_chole, y = weight)) +
-  geom_point() +
-  labs(x = "HDL_chole", y = "weight", title = "Scatter HDL_chole | weight") + 
+sp_weight_hdl_chole <- ggplot(data, aes(x = weight, y = log(HDL_chole))) +
+  geom_point(alpha = 0.2) +
+  labs(x = "weight", y = "HDL_chole", title = "Scatter weight | log(HDL_chole)") + 
   theme(axis.text = element_text(size = 8),
         axis.title = element_text(size = 8),
         plot.title = element_text(size = 8))
-ggsave("./output/Lab1_EDA/corr/sp_hdl_chole_weight.png", plot = sp_hdl_chole_weight)
+ggsave("./output/Lab1_EDA/corr/sp_hdl_chole_weight.png", plot = sp_weight_hdl_chole)
 
 # Scatter Point plot: triglyceride | HDL_chole
-sp_triglyceride_hdl_chole <- ggplot(data, aes(x = triglyceride, y = HDL_chole)) +
-  geom_point() +
-  labs(x = "tridlyceride", y = "HDL_chole", title = "Scatter triglyceride | HDL_chole") + 
+sp_triglyceride_hdl_chole <- ggplot(data, aes(x = triglyceride, y = log(HDL_chole))) +
+  geom_point(alpha = 0.2) +
+  labs(x = "tridlyceride", y = "log(HDL_chole)", title = "Scatter triglyceride | log(HDL_chole)") + 
   theme(axis.text = element_text(size = 8),
         axis.title = element_text(size = 8),
         plot.title = element_text(size = 8))
 ggsave("./output/Lab1_EDA/corr/sp_triglyceride_hdl_chole.png", plot = sp_triglyceride_hdl_chole)
 
 # Scatter Point plot: hemoglobin | HDL_chole
-sp_hemoglobin_hdl_chole <- ggplot(data, aes(x = hemoglobin, y = HDL_chole)) +
-  geom_point() +
-  labs(x = "hemoglobin", y = "HDL_chole", title = "Scatter hemoglobin | HDL_chole") + 
+sp_hemoglobin_hdl_chole <- ggplot(data, aes(x = hemoglobin, y = log(HDL_chole))) +
+  geom_point(alpha = 0.2) +
+  labs(x = "hemoglobin", y = "log(HDL_chole)", title = "Scatter hemoglobin | log(HDL_chole)") + 
   theme(axis.text = element_text(size = 8),
         axis.title = element_text(size = 8),
         plot.title = element_text(size = 8))
