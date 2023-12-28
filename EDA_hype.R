@@ -4,7 +4,7 @@ library(qqplotr)
 library(ggpubr)
 
 # load and display data
-data <- read_csv('original-data.csv')
+data <- read_csv('clean-data.csv')
 
 
 # >>> drink >>>
