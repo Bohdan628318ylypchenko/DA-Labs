@@ -174,7 +174,7 @@ median_confidence_intervals_norm <- bind_rows(
 write_csv(median_confidence_intervals_norm, file = "./output/Lab2_HI/median_confidence_intervals_norm.csv")
 
 # hypos
-test_hypo <- function(x, y) {
+calc_statistics_criteria <- function(x, y) {
   mean_x <- mean(x)
   mean_y <- mean(y)
   mean_d <- mean_x - mean_y
@@ -183,8 +183,9 @@ test_hypo <- function(x, y) {
   nx <- length(x)
   ny <- length(y)
   se = sqrt(((sd_x * sd_x)/nx) + ((sd_y * sd_y)/ny))
-  result = mean_d / se
-  return(c(statistics_criteria = result, standard_error = se))
+  sc = mean_d / se
+  ci_low = mean_d - se * 1.64
+  return(c(statistics_criteria = sc, standard_error = se, confidence_interval_low = ci_low))
 }
 
 # hypo: weight (body mass index) influence on hemoglobin
@@ -193,61 +194,62 @@ test_hypo <- function(x, y) {
 data <- data %>% mutate(mbi = data$weight / ((0.01 * data$height)^2))
 x <- (data %>% filter(mbi > 25))$hemoglobin
 y <- (data %>% filter(mbi <= 25))$hemoglobin
-test_hypo(x, y)
+calc_statistics_criteria(x, y)
 c(mean_hemoglobin_not_obese = mean(y), mean_hemoglobin_obese = mean(x))
+
 
 # hypo: Alcohol influences on SBP
 # h0: SBP(Alc) = SBP(NoAlc)
 # ha: SBP(Alc) > SBP(NoAlc)
 x <- (data %>% filter(DRK_YN == "Y"))$SBP
 y <- (data %>% filter(DRK_YN == "N"))$SBP
-test_hypo(x, y)
+calc_statistics_criteria(x, y)
 
 # hypo: Alcohol influence on DBP
 # h0: DBP(Alc) = DBP(NoAlc)
 # ha: DBP(Alc) > DBP(NoAlc)
 x <- (data %>% filter(DRK_YN == "Y"))$DBP
 y <- (data %>% filter(DRK_YN == "N"))$DBP
-test_hypo(x, y)
+calc_statistics_criteria(x, y)
 
 # hypo: Alcohol influence on tot_chole
 # h0: tot_chole(Alc) = tot_chole(NoAlc)
 # ha: tot_chole(Alc) > tot_chole(NoAlc)
 x <- (data %>% filter(DRK_YN == "Y"))$tot_chole
 y <- (data %>% filter(DRK_YN == "N"))$tot_chole
-test_hypo(x, y)
+calc_statistics_criteria(x, y)
 
 # hypo: Alcohol influence on hemoglobin
 # h0: hemoglobin(Alc) = hemoglobin(NoAlc)
 # ha: hemoglobin(Alc) > hemoglobin(NoAlc)
 x <- (data %>% filter(DRK_YN == "Y"))$hemoglobin
 y <- (data %>% filter(DRK_YN == "N"))$hemoglobin
-test_hypo(x, y)
+calc_statistics_criteria(x, y)
 
 # hypo: Smoking influence on SBP
 # h0: SBP(2) = SBP(1|3)
 # ha: SBP(2) < SBP(1|3)
 x <- (data %>% filter(SMK_stat_type_cd == 2))$SBP
 y <- (data %>% filter(SMK_stat_type_cd != 2))$SBP
-test_hypo(x, y)
+calc_statistics_criteria(x, y)
 
 # hypo: Smoking influence on DBP
 # h0: DBP(2) = DBP(1|3)
 # ha: DBP(2) < DBP(1|3)
 x <- (data %>% filter(SMK_stat_type_cd == 2))$DBP
 y <- (data %>% filter(SMK_stat_type_cd != 2))$DBP
-test_hypo(x, y)
+calc_statistics_criteria(x, y)
 
 # hypo: Smoking influence on hemoglobin 1
 # h0: hemoglobin(3) = hemoglobin(1)
 # ha: hemoglobin(3) > hemoglobin(1)
 x <- (data %>% filter(SMK_stat_type_cd == 3))$hemoglobin
 y <- (data %>% filter(SMK_stat_type_cd == 1))$hemoglobin
-test_hypo(x, y)
+calc_statistics_criteria(x, y)
 
 # hypo: Smoking influence on hemoglobin 2
 # h0: hemoglobin(3) = hemoglobin(2)
 # ha: hemoglobin(3) > hemoglobin(2)
 x <- (data %>% filter(SMK_stat_type_cd == 3))$hemoglobin
 y <- (data %>% filter(SMK_stat_type_cd == 2))$hemoglobin
-test_hypo(x, y)
+calc_statistics_criteria(x, y)
